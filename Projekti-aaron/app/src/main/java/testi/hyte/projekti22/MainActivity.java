@@ -1,21 +1,16 @@
 package testi.hyte.projekti22;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.AlarmClock;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 
+//MainActivity, josta pääsee joko kaavaan tai kyselyyn (kutsuu kyselyn itse ensimmäisen kerran, kun sovellus käynnistetään)
 public class MainActivity extends AppCompatActivity {
     private int hoursOfSleep, hoursToSleep, whenWakeUp, wakeUpGoal;
     private final AI aiForAlarm= new AI();
@@ -28,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
     private int today;
 
-
     public static final String MESSAGE_HOURSOFSLEEP = "com.example.testi.hyte.projekti22.MESSAGE_HOURSOFSLEEP";
     public static final String MESSAGE_HOURSTOSLEEP = "com.example.testi.hyte.projekti22.MESSAGE_HOURSTOSLEEP";
     public static final String MESSAGE_WHENWAKEUP = "com.example.testi.hyte.projekti22.MESSAGE_WHENWAKEUP";
     public static final String MESSAGE_WAKEUPGOAL= "com.example.testi.hyte.projekti22.MESSAGE_WAKEUPGOAL";
     public static final String MESSAGE_STARTINGDATE= "com.example.testi.hyte.projekti22.MESSAGE_STARTINGDATE";
 
+    //Tarkistaa, onko muuttujat tulleet kyselystä ja tallentaa ne SharedPreferenceen, sitten kutsuu herätyskellon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
         prefEditor.putBoolean("quizDone", quizDone);
         prefEditor.apply();
 
-
-        setAlarm();
-
-
-
+        if(hoursOfSleep+hoursToSleep+whenWakeUp+wakeUpGoal != 0) {
+            setAlarm();
+        }
     }
 
     protected void onPause() {
@@ -97,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Nappi, joka aktivoi kaavan
+    //Nappi, joka aktivoi kaavan (GraphActivity), ja lähettää kaavaa varten tarvittavat muuttujat
     public void buttonPressed(View v){
 
         Intent intent = new Intent(this, GraphActivity.class);
@@ -125,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Asettaa herätyskellon
+    //Asettaa herätyskellon(Yksi nukkumaanmenolle ja yksi herätykselle)
     private void setAlarm(){
 
         LocalTime zeroTime = LocalTime.MIN;
@@ -134,47 +127,32 @@ public class MainActivity extends AppCompatActivity {
 
         today = aiForAlarm.dayCounter(aiForAlarm.getCurrentDate(0))-1;
 
-
         LocalTime wakeUpTime = LocalTime.parse(aiForAlarm.getWhenWakeUp(today));
-
         LocalTime sleepTime = LocalTime.parse(aiForAlarm.getWhenSleep(today));
 
-
         alarm(wakeUpTime.getHour(), wakeUpTime.getMinute(), false, "Herätys!");
-
         alarm(sleepTime.getHour(), sleepTime.getMinute(), true, "Nukkumaan!");
-
-
-        Log.d("ALARM_CHECK", "Alarm Set!");
-
-
-
 
     }
 
-
+    //Luo herätyskellon android-puhelimen omaan sovelluksen
     public void alarm(int hour, int minute, boolean silentAlarm, String title) {
 
         Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
 
-        // Asettaa hälytykseen tietyn Tunnin, Minuutin ja Skippaa Kello sovellukseen menon //
         intent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         intent.putExtra(AlarmClock.EXTRA_MINUTES, minute);
         intent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
         intent.putExtra(AlarmClock.EXTRA_MESSAGE, title);
 
-
         if(silentAlarm) {
             intent.putExtra(AlarmClock.EXTRA_RINGTONE, "silent");
         }
 
-        // Varmistaa sen että sovellus ei yritä pistää hälytystä mahdottomaan aikaan //
         if (hour <= 24 && minute <= 60) {
 
             startActivity(intent);
         }
     }
-
-
 
 }
