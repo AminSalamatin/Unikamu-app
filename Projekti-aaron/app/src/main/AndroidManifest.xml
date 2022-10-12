@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="testi.hyte.projekti22">
-
-    <uses-sdk
-        android:minSdkVersion="26"
-        android:targetSdkVersion="30" />
-
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -38,6 +34,5 @@
                 android:value=".MainActivity" />
         </activity>
     </application>
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
 </manifest>
