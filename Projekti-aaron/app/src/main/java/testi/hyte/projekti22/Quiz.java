@@ -1,7 +1,6 @@
 package testi.hyte.projekti22;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-//Kysely, jossa käyttäjä valitsee ajat
+
+//Kysely, jossa käyttäjä valitsee ajat sovellksen toimintaa varten
 public class Quiz extends AppCompatActivity {
 
     private TimePicker picker;
@@ -26,7 +26,7 @@ public class Quiz extends AppCompatActivity {
     public static final String MESSAGE_WAKEUPGOAL= "com.example.testi.hyte.projekti22.MESSAGE_WAKEUPGOAL";
     public static final String MESSAGE_QUIZDONE= "com.example.testi.hyte.projekti22.MESSAGE_QUIZDONE";
 
-
+    //Asettaa alkumuuttujat kyselylle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
