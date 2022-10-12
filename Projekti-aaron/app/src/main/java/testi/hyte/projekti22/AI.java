@@ -1,12 +1,5 @@
 package testi.hyte.projekti22;
 
-import static java.time.temporal.ChronoUnit.MINUTES;
-
-import android.os.Build;
-import android.util.Log;
-
-import androidx.annotation.RequiresApi;
-
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +8,6 @@ import java.util.List;
 
 
 //Tämä luokka käsittelee logiikan, jolla unirytmi lasketaan ja päivät näytetään kaavassa
-
 public class AI {
 
     private LocalDate dateNow = LocalDate.now();
@@ -27,9 +19,7 @@ public class AI {
 
     private List<AI> listForGraph;
 
-
     int daysTotal = 0;
-
 
     //Tämä kutsutaan
     public AI(){
@@ -49,32 +39,18 @@ public class AI {
 
     //Räätälöi listan päivistä
     private void graphBuilder(LocalTime hoursOfSleep, LocalTime hoursToSleep, LocalTime whenWakeUp, LocalTime wakeUpGoal, LocalDate currentDate){
-
-        Log.d("MAIN_VALUES", "hoursOfSleep: " + hoursOfSleep + " hoursToSleep: "+ hoursToSleep+" whenWakeUp: "+whenWakeUp+" wakeUpGoal: "+wakeUpGoal+" currentDate: "+currentDate);
-
-
+        
         double minsOfSleep = hoursOfSleep.getMinute()*1+(hoursOfSleep.getHour()*60);
-
 
         int i = 0;
         daysTotal = dayCounter(currentDate);
 
-        float timeDiffNotNull = 1;
-
-        if(timeDiffInMins(whenWakeUp,wakeUpGoal, 1) != 0){
-            timeDiffNotNull = timeDiffInMins(whenWakeUp,wakeUpGoal, i);
-        }
-
         while(i<daysTotal+7){
-
 
             listForGraph.add(new AI((minsOfSleep-(timeDiffInMins(hoursOfSleep,hoursToSleep, i)))/60, (whenWakeUp.minusMinutes((long)(timeDiffInMins(whenWakeUp,wakeUpGoal, i)))) , (whenWakeUp.minusMinutes((long)(((minsOfSleep-(timeDiffInMins(hoursOfSleep,hoursToSleep, i)))+timeDiffInMins(whenWakeUp,wakeUpGoal, i))))), currentDate.plusDays(i)));
 
-            Log.d("TIMEDIFF_CHECK", "value: " + (whenWakeUp.minusMinutes((long)(timeDiffInMins(whenWakeUp,wakeUpGoal, i)))) + " No "+i);
-
             i++;
-
-
+            
         }
 
     }
@@ -86,7 +62,6 @@ public class AI {
     }
 
     //Laskee päiviä
-
     public int dayCounter(LocalDate firstDay){
         int day= 1;
         LocalDate dayCount = firstDay;
@@ -96,7 +71,6 @@ public class AI {
             day++;
             dayCount = dayCount.plusDays(1);
 
-            Log.d("DAY_COUNT", "Day: " + day);
         }
         return day;
 
@@ -105,27 +79,16 @@ public class AI {
     //Laskee aikavälin logiikan päivien välillä
     private float timeDiffInMins(LocalTime current, LocalTime goal, int modifier){
         float timeDiff, timeDiffLimit;
-
-
+        
             timeDiff = ((current.getMinute() + current.getHour()*60 - goal.getMinute() - goal.getHour()*60) / 6)*(modifier);
-
-
+            
             timeDiffLimit =  (current.getMinute() + current.getHour()*60 - goal.getMinute() - goal.getHour()*60);
-
-
-
-
 
         if(timeDiffLimit <= timeDiff){
             timeDiff = timeDiffLimit;
         }
 
         return timeDiff;
-    }
-
-    //Hakee koko listan
-    public List<AI> getListForGraph() {
-        return listForGraph;
     }
 
     //Pitää viikkovälin kaavaa varten
@@ -163,12 +126,5 @@ public class AI {
         return listForGraph.get(i).currentDate;
 
     }
-
-
-    //Nykyinen päivämäärä ja aika
-    public LocalDate getDateNow(){ return dateNow;}
-
-    public LocalTime getTimeNow(){ return timeNow;}
-
 
 }
