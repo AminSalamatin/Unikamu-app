@@ -165,25 +165,10 @@ public class AI {
     }
 
 
-
-
     //Nykyinen päivämäärä ja aika
     public LocalDate getDateNow(){ return dateNow;}
 
     public LocalTime getTimeNow(){ return timeNow;}
-
-
-    //Esimerkkejä testailuun
-    public LocalTime getExample1() {return LocalTime.parse("8:30"); }
-    public LocalTime getExample2() {return LocalTime.parse("10:00"); }
-    public LocalTime getExample3() {return LocalTime.parse("21:00"); }
-
-    public LocalDate getExampleDate() {return LocalDate.now(); }
-    public LocalDate getExampleDate2() {return LocalDate.now().plusDays(7); }
-    public LocalDate getExampleDate3() {return LocalDate.now().minusDays(7); }
-
-    private void logicTest(){}
-
 
 
 }
