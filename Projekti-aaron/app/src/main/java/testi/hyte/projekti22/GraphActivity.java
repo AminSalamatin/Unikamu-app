@@ -12,8 +12,14 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
-//Aktiviteetti, jossa tapahtuu kaavan piirto
+/**
+ * GraphActivity, Aktiviteetti, jossa piirretään kaava, jossa näkyy järjestys
+ * Vaakasuora X on päivät ja pystysuora Y on aika
+ * @author Amin
+ *
+ * Itse kaavaan on käytetty com.jjoe64.graphview pakettia
+ * Linkki: https://github.com/jjoe64/GraphView
+ */
 public class GraphActivity extends AppCompatActivity {
 
     private final AI aiForGraph = new AI();
@@ -41,7 +47,7 @@ public class GraphActivity extends AppCompatActivity {
 
         days = aiForGraph.dayCounter(aiForGraph.getCurrentDate(0));
 
-        weekMax = aiForGraph.weekRange(days);
+        weekMax = weekRange(days);
 
         drawGraph();
 
@@ -105,6 +111,18 @@ public class GraphActivity extends AppCompatActivity {
         graph.getGridLabelRenderer().reloadStyles();
     }
 
+    //Pitää viikkovälin kaavaa varten
+    private int weekRange(int today){
+        int dayDiff;
+        if(today>=7){
+            dayDiff = 7;
+        } else{
+
+            dayDiff = today;
+        }
+
+        return dayDiff;
+    }
 
     //Asettaa tekstin kaavan alapuolelle, jossa seuraava nukkumaanmeno ja herätys
     private void setTextUi(int day){
