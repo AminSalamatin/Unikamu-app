@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-
-//Kysely, jossa käyttäjä valitsee ajat sovellksen toimintaa varten
+/**
+ * Kyselyaktiviteetti, jossa käyttäjä valitsee ajat sovellksen toimintaa varten
+ * @author Amin
+ */
 public class Quiz extends AppCompatActivity {
 
     private TimePicker picker;
@@ -43,26 +45,29 @@ public class Quiz extends AppCompatActivity {
 
     }
 
-    //Lähettää kyselystä saadut tiedot eteenpäin ja sulkee kyselyn
+    /**
+     * Lähettää kyselystä saadut tiedot eteenpäin ja sulkee kyselyn
+     * @param v View, josta funktio aktivoituu
+     */
     public void sendInfo(View v){
 
         switch (i){
 
-            case 0: intent.putExtra(MESSAGE_HOURSOFSLEEP, (int)((picker.getHour()*60)+picker.getMinute()));
+            case 0: intent.putExtra(MESSAGE_HOURSOFSLEEP, ((picker.getHour()*60)+picker.getMinute()));
                 textView.setText("Monta tuntia haluaisit nukkua päivässä?");
                 i++;
                 break;
-            case 1: intent.putExtra(MESSAGE_HOURSTOSLEEP, (int)((picker.getHour()*60)+picker.getMinute()));
+            case 1: intent.putExtra(MESSAGE_HOURSTOSLEEP, ((picker.getHour()*60)+picker.getMinute()));
                 textView.setText("Monelta heräsit tänään?");
                 button.setText("Jatka");
                 i++;
                 break;
-            case 2: intent.putExtra(MESSAGE_WHENWAKEUP, (int)((picker.getHour()*60)+picker.getMinute()));
+            case 2: intent.putExtra(MESSAGE_WHENWAKEUP, ((picker.getHour()*60)+picker.getMinute()));
                 textView.setText("Monelta haluaisit herätä joka päivä?");
                 button.setText("Valmis");
                 i++;
                 break;
-            case 3: intent.putExtra(MESSAGE_WAKEUPGOAL, (int)((picker.getHour()*60)+picker.getMinute()));
+            case 3: intent.putExtra(MESSAGE_WAKEUPGOAL, ((picker.getHour()*60)+picker.getMinute()));
                 intent.putExtra(MESSAGE_QUIZDONE, true);
                 startActivity(intent);
                 break;
