@@ -9,8 +9,10 @@ import android.view.View;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
-//MainActivity, josta pääsee joko kaavaan tai kyselyyn (kutsuu kyselyn itse ensimmäisen kerran, kun sovellus käynnistetään)
+/**
+ * MainActivity, josta pääsee joko kaavaan tai kyselyyn (kutsuu kyselyn itse ensimmäisen kerran, kun sovellus käynnistetään)
+ * @author Amin ja Aaron
+ */
 public class MainActivity extends AppCompatActivity {
     private int hoursOfSleep, hoursToSleep, whenWakeUp, wakeUpGoal;
     private final AI aiForAlarm= new AI();
@@ -90,7 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Nappi, joka aktivoi kaavan (GraphActivity), ja lähettää kaavaa varten tarvittavat muuttujat
+    /**
+     * Funktio, joka aktivoi kaavan (GraphActivity), ja lähettää kaavaa varten tarvittavat muuttujat
+     * @param v View, josta funktio aktivoituu
+     */
     public void buttonPressed(View v){
 
         Intent intent = new Intent(this, GraphActivity.class);
@@ -104,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Nappi, joka tyhjentää muistin ja antaa käyttäjälle kyselyn uudestaan
+    /**
+     * Funktio, joka tyhjentää muistin ja antaa käyttäjälle kyselyn uudestaan
+     * @param v View, josta funktio aktivoituu
+     */
     public void resetQuiz(View v){
 
         hoursOfSleep = 0;
@@ -136,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Luo herätyskellon android-puhelimen omaan sovelluksen
-    public void alarm(int hour, int minute, boolean silentAlarm, String title) {
+    private void alarm(int hour, int minute, boolean silentAlarm, String title) {
 
         Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
 
